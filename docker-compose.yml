@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    ports:
+        - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - golang-mysql
+    links:
+      - golang-mysql
+    env_file:
+      - .env
+    command: >
+      sh -c "./main migrate up && ./main serve"
+    networks:
+      - backend
+  golang-mysql:
+    container_name: golang-mysql
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: test_beni
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 
+    networks:
+      - backend
+networks:
+  backend:

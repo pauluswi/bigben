@@ -1,0 +1,12 @@
+### check current balance by account number
+GET http://localhost:3000/account/55501
+Accept: application/json
+
+### Transfer amount
+POST http://localhost:3000/account/55501/transfer
+Content-Type: application/json
+
+{
+  "to_account_number" : 55502,
+  "amount" : 100
+}
