@@ -28,9 +28,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: test_beni
+      MYSQL_DATABASE: db_wallet
       MYSQL_USER: root
-      MYSQL_PASSWORD: 
+      MYSQL_PASSWORD: P@ssw0rd
     networks:
       - backend
 networks:

@@ -1,11 +1,12 @@
 package main
 
 import (
-	//"bigben/cmd"
 	"fmt"
+
+	"github.com/pauluswi/bigben/cmd"
 )
 
 func main() {
 	fmt.Println("cli program started...")
-	//cmd.Execute()
+	cmd.Execute()
 }
