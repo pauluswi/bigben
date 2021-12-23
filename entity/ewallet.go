@@ -1,8 +1,9 @@
 package entity
 
 type Ewallet struct {
-	AccountID int32
-	Balance   int
+	AccountID    int32
+	Balance      int
+	ModifiedDate string
 }
 
 type EwalletTrx struct {

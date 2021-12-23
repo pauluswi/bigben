@@ -30,14 +30,14 @@ func NewEWalletController(ewalletService *service.EWalletService) EWalletControl
 }
 
 func (controller *EWalletController) Route(app *fiber.App) {
-	app.Get("/account/:account_number", controller.GetBalance)
+	app.Get("/v1/ewallet/balance/:account_id", controller.GetBalance)
 	app.Post("/account/:from_account_number/transfer", controller.Transfer)
 }
 
 func (controller *EWalletController) GetBalance(c *fiber.Ctx) error {
-	accountNumberParam := c.Params("account_number")
+	accountNumberParam := c.Params("account_id")
 
-	err := validation.ValidateAccountNumber("account_number", accountNumberParam)
+	err := validation.ValidateAccountNumber("account_id", accountNumberParam)
 
 	if err != nil {
 		return exception.ValidationError{Message: err.Error()}
@@ -75,7 +75,7 @@ func (controller *EWalletController) Transfer(c *fiber.Ctx) error {
 	}
 
 	validation.ValidateTransfer(requestBody)
-	err = controller.EWalletService.Transfer(int32(fromAccountNumber), requestBody.ToAccountNumber, requestBody.Amount)
+	err = controller.EWalletService.EWalletTransfer(int32(fromAccountNumber), requestBody.ToAccountNumber, requestBody.Amount)
 	if err != nil {
 		fmt.Println("----- err 3 :", err)
 		return exception.ErrorHandler(c, err)

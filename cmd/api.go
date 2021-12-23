@@ -29,12 +29,15 @@ func init() {
 
 			// Setup Repository
 			accountRepository := repository.NewAccountRepository(database)
+			ewalletRepository := repository.NewEWalletRepository(database)
 
 			// Setup Service
 			accountService := service.NewAccountService(&accountRepository)
+			ewalletService := service.NewEWalletService(&ewalletRepository)
 
 			// Setup Controller
 			accountController := controller.NewAccountController(&accountService)
+			ewalletController := controller.NewEWalletController(&ewalletService)
 
 			// Setup Fiber
 			app := fiber.New(config.NewFiberConfig())
@@ -42,6 +45,7 @@ func init() {
 
 			// Setup Routing
 			accountController.Route(app)
+			ewalletController.Route(app)
 
 			// Start App
 			err := app.Listen(":3000")

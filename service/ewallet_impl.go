@@ -23,16 +23,16 @@ func (service *ewalletServiceImpl) EWalletTransfer(fromAccountNumber int32, toAc
 	return nil
 }
 
-func (service *ewalletServiceImpl) GetEWalletBalance(accountNumber int32) (response *model.AccountBalanceResponse, err error) {
+func (service *ewalletServiceImpl) GetEWalletBalance(accountNumber int32) (response *model.EWalletBalanceResponse, err error) {
 	balance, err := service.EWalletRepository.Find(accountNumber)
 	if err != nil {
 		return nil, err
 	}
 
-	response = &model.AccountBalanceResponse{
-		AccountNumber: balance.AccountNumber,
-		CustomerName:  balance.Name,
+	response = &model.EWalletBalanceResponse{
+		AccountNumber: balance.AccountID,
 		Balance:       balance.Balance,
+		ModifiedDate:  balance.ModifiedDate,
 	}
 	return response, nil
 }

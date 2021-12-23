@@ -78,20 +78,20 @@ func (repository *ewalletRepositoryImpl) Update(fromAccountNumber int32, toAccou
 
 }
 
-func (repository *ewalletRepositoryImpl) Find(accountNumber int32) (balance *entity.Balance, err error) {
+func (repository *ewalletRepositoryImpl) Find(accountNumber int32) (balance *entity.Ewallet, err error) {
 	var (
 		accountNumberRow sql.NullInt32
-		accountNameRow   sql.NullString
 		balanceRow       sql.NullInt32
+		modifiedDateRow  sql.NullString
 	)
 	ctx, cancel := config.NewMySQLContext()
 	defer cancel()
 
-	query := `SELECT a.account_number, c.name, a.balance FROM customer c INNER JOIN account a ON c.customer_number = a.customer_number WHERE a.account_number = ?`
+	query := `SELECT accountid, balance, modifieddate FROM db_wallet.wallet WHERE accountid = ?`
 	err = repository.Database.QueryRowContext(ctx, query, accountNumber).Scan(
 		&accountNumberRow,
-		&accountNameRow,
 		&balanceRow,
+		&modifiedDateRow,
 	)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -103,10 +103,10 @@ func (repository *ewalletRepositoryImpl) Find(accountNumber int32) (balance *ent
 	}
 
 	// no err found assign to struct
-	balance = &entity.Balance{
-		AccountNumber: accountNumberRow.Int32,
-		Name:          accountNameRow.String,
-		Balance:       int(balanceRow.Int32),
+	balance = &entity.Ewallet{
+		AccountID:    accountNumberRow.Int32,
+		Balance:      int(balanceRow.Int32),
+		ModifiedDate: modifiedDateRow.String,
 	}
 	return balance, nil
 }

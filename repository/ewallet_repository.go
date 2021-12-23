@@ -5,6 +5,6 @@ import (
 )
 
 type EWalletRepository interface {
-	Find(accountNumber int32) (balance *entity.Balance, err error)
+	Find(accountNumber int32) (balance *entity.Ewallet, err error)
 	Update(fromAccountNumber int32, toAccountNumber int32, amount int) (err error)
 }

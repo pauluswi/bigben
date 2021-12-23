@@ -7,6 +7,6 @@ type CreateEWalletTransferRequest struct {
 
 type EWalletBalanceResponse struct {
 	AccountNumber int32  `json:"account_number"`
-	CustomerName  string `json:"customer_name"`
 	Balance       int    `json:"balance"`
+	ModifiedDate  string `json:"modified_date"`
 }
