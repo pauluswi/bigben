@@ -6,9 +6,13 @@ type Ewallet struct {
 }
 
 type EwalletTrx struct {
-	AccountID int32
-	TrxID     int32
-	TrxType   string
-	CD        string
-	Amount    int
+	AccountID    int32
+	TrxID        int32
+	TrxType      string
+	CD           string
+	Amount       int
+	CreatedBy    string
+	CreatedDate  string
+	ModifiedBy   string
+	ModifiedDate string
 }
