@@ -32,6 +32,10 @@ func NewEWalletController(ewalletService *service.EWalletService) EWalletControl
 func (controller *EWalletController) Route(app *fiber.App) {
 	app.Get("/v1/ewallet/balance/:account_id", controller.GetBalance)
 	app.Post("/account/:from_account_number/transfer", controller.Transfer)
+
+	//app.Get("/v1/ewallet/balance/:account_id", middleware.AuthorizationGuard(controller.GetBalance))
+	// api.HandleFunc("/org/customer/finalize", middleware.AuthorizationGuard(handler.Finalization, orgConst.APICodeFinalizationApp, orgConst.MenuCodeEmpty))
+
 }
 
 func (controller *EWalletController) GetBalance(c *fiber.Ctx) error {
