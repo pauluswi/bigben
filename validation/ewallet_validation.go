@@ -34,3 +34,27 @@ func ValidateEWalletTransfer(request model.TransferRequest) {
 		})
 	}
 }
+
+func ValidateEWalletDeposit(request model.EWalletDepositRequest) {
+	err := validation.ValidateStruct(&request,
+		validation.Field(&request.ToAccountNumber, validation.Required, validation.Min(1)),
+		validation.Field(&request.Amount, validation.Required, validation.Min(1)),
+	)
+	if err != nil {
+		panic(exception.ValidationError{
+			Message: err.Error(),
+		})
+	}
+}
+
+func ValidateEWalletWithdrawal(request model.EWalletWitdrawalRequest) {
+	err := validation.ValidateStruct(&request,
+		validation.Field(&request.FromAccountNumber, validation.Required, validation.Min(1)),
+		validation.Field(&request.Amount, validation.Required, validation.Min(1)),
+	)
+	if err != nil {
+		panic(exception.ValidationError{
+			Message: err.Error(),
+		})
+	}
+}

@@ -22,3 +22,13 @@ type EWalletTransactionsResponse struct {
 	ModifiedBy   string `json:"modified_by"`
 	ModifiedDate string `json:"modified_date"`
 }
+
+type EWalletDepositRequest struct {
+	ToAccountNumber int32 `json:"to_account_number"`
+	Amount          int   `json:"amount"`
+}
+
+type EWalletWitdrawalRequest struct {
+	FromAccountNumber int32 `json:"from_account_number"`
+	Amount            int   `json:"amount"`
+}

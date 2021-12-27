@@ -15,14 +15,6 @@ type ewalletServiceImpl struct {
 	EWalletRepository repository.EWalletRepository
 }
 
-func (service *ewalletServiceImpl) EWalletTransfer(fromAccountNumber int32, toAccountNumber int32, amount int) (err error) {
-	err = service.EWalletRepository.Transfer(fromAccountNumber, toAccountNumber, amount)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func (service *ewalletServiceImpl) GetEWalletBalance(accountNumber int32) (response *model.EWalletBalanceResponse, err error) {
 	balance, err := service.EWalletRepository.Find(accountNumber)
 	if err != nil {
@@ -60,6 +52,29 @@ func (service *ewalletServiceImpl) GetEWalletTransactions(accountNumber int32) (
 
 		trxs = append(trxs, trx)
 	}
-
 	return trxs, nil
+}
+
+func (service *ewalletServiceImpl) EWalletTransfer(fromAccountNumber int32, toAccountNumber int32, amount int) (err error) {
+	err = service.EWalletRepository.Transfer(fromAccountNumber, toAccountNumber, amount)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (service *ewalletServiceImpl) EWalletDeposit(toAccountNumber int32, amount int) (err error) {
+	err = service.EWalletRepository.Deposit(toAccountNumber, amount)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (service *ewalletServiceImpl) EWalletWithdrawal(fromAccountNumber int32, amount int) (err error) {
+	err = service.EWalletRepository.Withdrawal(fromAccountNumber, amount)
+	if err != nil {
+		return err
+	}
+	return nil
 }

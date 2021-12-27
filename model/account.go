@@ -16,3 +16,8 @@ type AccountBalanceResponse struct {
 	CustomerName  string `json:"customer_name"`
 	Balance       int    `json:"balance"`
 }
+
+type DepositRequest struct {
+	ToAccountNumber int32 `json:"to_account_number"`
+	Amount          int   `json:"amount"`
+}
