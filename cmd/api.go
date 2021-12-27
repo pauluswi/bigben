@@ -30,15 +30,12 @@ func init() {
 			database := config.NewMySQLDatabase(configuration)
 
 			// Setup Repository
-			accountRepository := repository.NewAccountRepository(database)
 			ewalletRepository := repository.NewEWalletRepository(database)
 
 			// Setup Service
-			accountService := service.NewAccountService(&accountRepository)
 			ewalletService := service.NewEWalletService(&ewalletRepository)
 
 			// Setup Controller
-			accountController := controller.NewAccountController(&accountService)
 			ewalletController := controller.NewEWalletController(&ewalletService)
 
 			// Setup Fiber
@@ -67,7 +64,6 @@ func init() {
 			app.Use(middleware.New(middleware.Config{Key: secretKey}))
 
 			// Setup Routing
-			accountController.Route(app)
 			ewalletController.Route(app)
 
 			// Start App

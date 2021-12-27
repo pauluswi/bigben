@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestAccountController_GetBalance(t *testing.T) {
-	request := httptest.NewRequest("GET", "/account/55501", nil)
+func TestEWalletController_GetBalance(t *testing.T) {
+	request := httptest.NewRequest("GET", "/v1/ewallet/balance/10001", nil)
 	request.Header.Set("Accept", "application/json")
 
 	response, _ := app.Test(request)
@@ -26,18 +26,18 @@ func TestAccountController_GetBalance(t *testing.T) {
 	assert.Equal(t, "OK", webResponse.Status)
 }
 
-func TestAccountController_Transfer(t *testing.T) {
-	makeTransfer := model.CreateTransferRequest{
-		ToAccountNumber: 55502,
-		Amount:          100,
+func TestEWalletController_Transfer(t *testing.T) {
+	makeTransfer := model.EWalletTransferRequest{
+		FromAccountNumber: 10001,
+		ToAccountNumber:   10002,
+		Amount:            100,
 	}
 
 	requestBody, _ := json.Marshal(makeTransfer)
 
-	request := httptest.NewRequest("POST", "/account/55501/transfer", bytes.NewBuffer(requestBody))
+	request := httptest.NewRequest("POST", "/v1/ewallet/transaction/transfer", bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-type", "application/json")
-	// request.Header.Set("Accept", "application/json")
 
 	response, _ := app.Test(request)
-	assert.Equal(t, 201, response.StatusCode)
+	assert.Equal(t, 200, response.StatusCode)
 }

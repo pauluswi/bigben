@@ -11,16 +11,16 @@ import (
 func createTestApp() *fiber.App {
 	var app = fiber.New(config.NewFiberConfig())
 	app.Use(recover.New())
-	accountController.Route(app)
+	ewalletController.Route(app)
 	return app
 }
 
 var configuration = config.New("../.env.test")
 
 var database = config.NewMySQLDatabase(configuration)
-var accountRepository = repository.NewAccountRepository(database)
-var accountService = service.NewAccountService(&accountRepository)
+var accountRepository = repository.NewEWalletRepository(database)
+var accountService = service.NewEWalletService(&accountRepository)
 
-var accountController = NewAccountController(&accountService)
+var ewalletController = NewEWalletController(&accountService)
 
 var app = createTestApp()

@@ -15,7 +15,7 @@ func ValidateAccountID(fieldName string, param interface{}) error {
 	}.Filter()
 }
 
-func ValidateEWalletTransfer(request model.TransferRequest) {
+func ValidateEWalletTransfer(request model.EWalletTransferRequest) {
 	err := validation.ValidateStruct(&request,
 		validation.Field(&request.FromAccountNumber, validation.Required, validation.Min(1)),
 		validation.Field(&request.ToAccountNumber, validation.Required, validation.Min(1)),

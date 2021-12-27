@@ -38,7 +38,7 @@ func (controller *EWalletController) Route(app *fiber.App) {
 func (controller *EWalletController) GetBalance(c *fiber.Ctx) error {
 	accountNumberParam := c.Params("account_id")
 
-	err := validation.ValidateAccountNumber("account_id", accountNumberParam)
+	err := validation.ValidateAccountID("account_id", accountNumberParam)
 
 	if err != nil {
 		return exception.ValidationError{Message: err.Error()}
@@ -61,7 +61,7 @@ func (controller *EWalletController) GetBalance(c *fiber.Ctx) error {
 func (controller *EWalletController) GetTransactions(c *fiber.Ctx) error {
 	accountNumberParam := c.Params("account_id")
 
-	err := validation.ValidateAccountNumber("account_id", accountNumberParam)
+	err := validation.ValidateAccountID("account_id", accountNumberParam)
 
 	if err != nil {
 		return exception.ValidationError{Message: err.Error()}
@@ -82,7 +82,7 @@ func (controller *EWalletController) GetTransactions(c *fiber.Ctx) error {
 }
 
 func (controller *EWalletController) Transfer(c *fiber.Ctx) error {
-	requestBody := model.TransferRequest{}
+	requestBody := model.EWalletTransferRequest{}
 	err := c.BodyParser(&requestBody)
 	if err != nil {
 		return exception.ErrorHandler(c, err)
