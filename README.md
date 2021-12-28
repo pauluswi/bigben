@@ -29,7 +29,7 @@ For Authentication, api key is used at header as a simple way to secure access.
 ├── repository                 // is a domain's repository acting to store the data
 ├── service                    // is a directory consist of functional interface
 ├── validation                 // is a directory consist of functional validation
-
+```
 # Endpoints
 
 ## Healthcheck
