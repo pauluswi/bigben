@@ -1,92 +1,78 @@
-# bigben
-An e-wallet service.
-Built on Go Lang.
+# BigBen
 
+BigBen is a microservice which provides simple wallet service for application users. 
 
+## Description
 
-# Installation Guide
+A Rest API to access monetary accounts with the current balance of a user. 
+The balance can be modified by registering transactions on the account, either debit transactions (removing funds) or credit transactions (adding funds).
 
-## Docker way  (recommended)
-### System requirements
-- [Docker](https://www.docker.com/) - Docker is an open source platform for building, deploying, and managing containerized applications. Learn about containers, how they compare to VMs, and why Docker is so widely adopted and used.
-- [docker-compose](https://docs.docker.com/compose/) - Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration
+A debit transaction will only succeed if there are sufficient funds on the account (balance - debit amount >= 0).
 
-### Setup (dockerize)
+Users are be able to view their wallet balance, transaction history, make point to point transfer, deposit (top up) and withdrawal (cash out).
 
-note : make sure docker and docker-compose installed
-- move to project dir
-- run cleanup docker-compose command 
-- run build command 
+ 
+## Directory Structure  
 
+├── cmd                        // app contains main execution file 
+├── configs                    // app configuration files 
+├── controller                 // is a directory consist of routing process
+├── database                   // is a directory consist of db/data processing
+│   └── migration              // is a directory consist of migration files
+│   └── seeder                 // is a directory consist of seeding data process
+├── entity                     // is a directory consist of struct models used in codebase
+├── exception                  // is a directory consist of exception mechanism
+├── middleware                 // is a directory consist of app validation layer before hit the main functionalities 
+├── model                      // is a directory consist of struct used roe request and response
+├── repository                 // is a domain's repository acting to store the data
+├── service                    // is a directory consist of functional interface
+├── validation                 // is a directory consist of functional validation
 
-```sh
-$ cd bigben
-$ docker-compose rm
-$ docker-compose up --build
-```
+# Endpoints
 
+## Healthcheck
 
-- open another terminal
-- run docker bash 
-- run seeder for seeding dummy data
-```sh
-$ docker-compose exec app bash 
-$ ./main seed CustomerSeed AccountSeed
-$ go test -v controller/*.go -race -coverprofile=coverage.out -covermode=atomic
-```
+| Endpoint | Method | Description |
+| -------- | ------ | ----------- |
+| /ping    | GET    | Check for the service application healthiness |
 
-- after that can open the page [localhost:3000](http://127.0.0.1:3000)
-- for test http request can use http-request.http file at root project
-- postman collection (https://www.getpostman.com/collections/a59464ce90293b484794)
+## Wallet
 
-## Manual
-### (manual installation)
+| Endpoint                                      | Method | Description |
+| --------------------------------------------- | ------ | ----------- |
+| /v1/ewallet/balance/:account_id               | GET    | Retrieve User's Wallet Balance  |
+| /v1/ewallet/transaction/history/:account_id   | GET    | Retrieve User's Transaction History |
+| /v1/ewallet/transaction/transfer              | POST   | Make a Point to Point Transfer |
+| /v1/ewallet/transaction/deposit               | POST   | Make a User's Wallet Deposit |
+| /v1/ewallet/transaction/withdrawal            | POST   | Make a User's Wallet Withdrawal |
 
-For manual installation requires 
-- MySQL Database 
-- Go v1.6 above
+# Getting started
 
-modify .env files and configure database, 
-this app provide 4 commands.
-
-- migrating database schema
-```sh
-$ go run main.go migrate up 
-```
-
-- drop database schema
-```sh
-$ go run main.go migrate down 
-```
-
-- seed dummy data 
-```sh
-$ go run main.go seed [ArgSeederFunc...] 
-```
-
-- serving app
+## Run service dependencies
 
 ```sh
-$ go run main.go serve
+make infra-up
 ```
 
-- after configuring the database, next is to run the command 
+## Run migration
+Migrates the database to the most recent version available.
+```
+make migrate-up
+```
+
+Undo 1 step database migration.
+```
+make migrate-down
+```
+
+## Run service application
 
 ```sh
-$ go mod download
-$ go mod tidy
-$ go run main.go migrate up 
-$ go run main.go seed CustomerSeed AccountSeed
-$ go run main.go serve 
+make serve
 ```
 
-- after that can open the page [localhost:3000](http://127.0.0.1:3000)
-- for test http request can use http-request.http file at root project
-- postman collection (https://www.getpostman.com/collections/a59464ce90293b484794)
-- unit testing
-```sh
-$ go test -v controller/*.go -race -coverprofile=coverage.out -covermode=atomic
-```
-![](doc/Screen Shot 2021-09-10 at 13.55.27.png)
+# Technology Used
 
-feedback
+- Golang (with Fiber Web Framework)
+- MySQL
+

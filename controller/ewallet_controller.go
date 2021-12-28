@@ -33,6 +33,7 @@ func (controller *EWalletController) Route(app *fiber.App) {
 	app.Post("/v1/ewallet/transaction/transfer", controller.Transfer)
 	app.Post("/v1/ewallet/transaction/deposit", controller.Deposit)
 	app.Post("/v1/ewallet/transaction/withdrawal", controller.Withdrawal)
+	app.Get("/ping", controller.HealthCheck)
 }
 
 func (controller *EWalletController) GetBalance(c *fiber.Ctx) error {
@@ -136,4 +137,8 @@ func (controller *EWalletController) Withdrawal(c *fiber.Ctx) error {
 		Status:  "Created",
 		Message: "Withdrawal Succeed",
 	})
+}
+
+func (controller *EWalletController) HealthCheck(c *fiber.Ctx) error {
+	return c.JSON("pong")
 }

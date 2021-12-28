@@ -40,4 +40,10 @@ func TestEWalletController_Transfer(t *testing.T) {
 
 	response, _ := app.Test(request)
 	assert.Equal(t, 200, response.StatusCode)
+	responseBody, _ := ioutil.ReadAll(response.Body)
+
+	webResponse := model.WebResponse{}
+	json.Unmarshal(responseBody, &webResponse)
+	assert.Equal(t, 201, webResponse.Code)
+	assert.Equal(t, "Created", webResponse.Status)
 }

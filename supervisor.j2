@@ -1,0 +1,9 @@
+[program:{{ svc_name }}]
+command=/bin/bash -c "ENV=$CI_ENV_SHORT_NAME /app/{{ svc_name }}/{{ svc_name }}"
+stdout_logfile=/var/log/{{ svc_name }}/{{ svc_name }}.log
+stderr_logfile=/var/log/{{ svc_name }}/{{ svc_name }}.error.log
+directory={{ home_app }}/{{ svc_name }}
+autorestart=true
+autostart=true
+user=app
+group=app
