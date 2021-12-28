@@ -15,7 +15,7 @@ For Authentication, api key is used at header as a simple way to secure access.
 
  
 ## Directory Structure  
-
+```
 ├── cmd                        // app contains main execution file 
 ├── configs                    // app configuration files 
 ├── controller                 // is a directory consist of routing process
