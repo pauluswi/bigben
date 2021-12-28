@@ -11,6 +11,8 @@ A debit transaction will only succeed if there are sufficient funds on the accou
 
 Users are be able to view their wallet balance, transaction history, make point to point transfer, deposit (top up) and withdrawal (cash out).
 
+For Authentication, api key is used at header as a simple way to secure access.
+
  
 ## Directory Structure  
 
@@ -46,6 +48,46 @@ Users are be able to view their wallet balance, transaction history, make point 
 | /v1/ewallet/transaction/deposit               | POST   | Make a User's Wallet Deposit |
 | /v1/ewallet/transaction/withdrawal            | POST   | Make a User's Wallet Withdrawal |
 
+# Curl
+
+  ```sh
+  curl -X GET \
+  http://localhost:3000/ping \
+  -H 'x-api-key: 12345' 
+  ```
+  ```sh
+  curl -X GET \
+  http://localhost:3000/v1/ewallet/balance/10001 \
+  -H 'x-api-key: 12345' 
+  ```
+  ```sh
+  curl -X GET \
+  http://localhost:3000/v1/ewallet/transaction/history/10001 \
+  -H 'x-api-key: 12345' 
+  ```
+  ```sh
+  curl -X POST \
+  http://localhost:3000/v1/ewallet/transaction/transfer \
+  -H 'x-api-key: 12345' \
+  -H 'Content-Type: application/json' \
+  -d '{"from_account_number":10001,"to_account_number":10002,"amount":8}'
+  ```
+  ```sh
+  curl -X POST \
+  http://localhost:3000/v1/ewallet/transaction/deposit \
+  -H 'x-api-key: 12345' \
+  -H 'Content-Type: application/json' \
+  -d '{"to_account_number":10001,"amount":8}'
+  ```
+ ```sh
+  curl -X POST \
+  http://localhost:3000/v1/ewallet/transaction/withdrawal \
+  -H 'x-api-key: 12345' \
+  -H 'Content-Type: application/json' \
+  -d '{"from_account_number":10001,"amount":8}'
+  ```
+
+
 # Getting started
 
 ## Run service dependencies
@@ -76,3 +118,27 @@ make serve
 - Golang (with Fiber Web Framework)
 - MySQL
 
+# Unit Testing
+
+For testability purpose, unit testings are provided.
+We can use golang test package.
+
+```sh
+$ go test -v controller/*.go -race -coverprofile=coverage.out -covermode=atomic
+=== RUN   TestEWalletController_GetBalance
+--- PASS: TestEWalletController_GetBalance (0.02s)
+=== RUN   TestEWalletController_GetTransactionHistory
+--- PASS: TestEWalletController_GetTransactionHistory (0.01s)
+=== RUN   TestEWalletController_Transfer
+--- PASS: TestEWalletController_Transfer (0.02s)
+=== RUN   TestEWalletController_Deposit
+--- PASS: TestEWalletController_Deposit (0.01s)
+=== RUN   TestEWalletController_Withdrawal
+--- PASS: TestEWalletController_Withdrawal (0.02s)
+=== RUN   TestEWalletController_HealthCheck
+--- PASS: TestEWalletController_HealthCheck (0.00s)
+PASS
+coverage: 81.1% of statements
+ok      command-line-arguments  1.833s  coverage: 81.1% of statements
+
+```
