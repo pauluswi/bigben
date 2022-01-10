@@ -20,4 +20,13 @@ jobs:
 
     - name: Build
       run: go build -v ./...
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+          file: ./coverage.out
+          flags: tests
+          name: codecov-umbrella
+          yml: ./build.yml
+          fail_ci_if_error: true
 
