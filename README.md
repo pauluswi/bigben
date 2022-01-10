@@ -3,6 +3,7 @@
 Is a microservice which provides simple wallet service for application users. 
 
 [![Build](https://github.com/pauluswi/bigben/actions/workflows/build.yml/badge.svg)](https://github.com/pauluswi/bigben/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/pauluswi/bigben/branch/master/graph/badge.svg)](https://codecov.io/gh/pauluswi/bigben)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
