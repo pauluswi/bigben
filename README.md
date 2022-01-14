@@ -9,14 +9,12 @@ Is a microservice which provides simple wallet service for application users.
 
 ## Description
 
-A Rest API to access monetary accounts with the current balance of a user. 
-The balance can be modified by registering transactions on the account, either debit transactions (removing funds) or credit transactions (adding funds).
+A Rest API to access monetary accounts with the current balance of a user. The balance can be modified by registering transactions on the account, either debit transactions (removing funds) or credit transactions (adding funds).
 
 A debit transaction will only succeed if there are sufficient funds on the account (balance - debit amount >= 0).
+Users can view their wallet balance, transaction history, make a point-to-point transfer, deposit (top-up), and withdrawal (cash out).
 
-Users are be able to view their wallet balance, transaction history, make point to point transfer, deposit (top up) and withdrawal (cash out).
-
-For Authentication, api key is used at header as a simple way to secure access.
+For Authentication, an API key is used at the header as a simple way to secure access.
 
  
 ## Directory Structure  
